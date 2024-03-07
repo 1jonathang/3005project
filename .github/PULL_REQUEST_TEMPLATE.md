@@ -12,6 +12,10 @@
 
 > Explain how you tested your changes to ensure they are correct.
 
+## Include any pictures you think are relevant to these changes.
+
+> Copy/paste screenshot here.
+
 ## Additional notes or comments
 
 > Add any additional notes or comments that might be helpful for reviewers.
