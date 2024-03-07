@@ -5,12 +5,14 @@ import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { Button } from "../ui/button";
 
-type Props = {};
+interface Props {
+   socialMessage?: string;
+};
 
-const Social = (props: Props) => {
+const Social = ({socialMessage}: Props) => {
   return (
     <div className="flex flex-col w-full gap-y-2 pt-6">
-      <p className="text-muted-foreground text-sm">Sign in with credentials</p>
+      <p className="text-muted-foreground text-sm">{socialMessage}</p>
       <div className="flex gap-x-2">
         <Button
           size="lg"
