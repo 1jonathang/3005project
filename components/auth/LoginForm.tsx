@@ -62,6 +62,7 @@ export const LoginForm = (props: Props) => {
       backButtonLabel="Don't have an account?"
       backButtonHref="/auth/register"
       showSocial
+      socialMessage="Sign in with credentials"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
