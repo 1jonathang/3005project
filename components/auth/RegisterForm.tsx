@@ -64,6 +64,7 @@ export const RegisterForm = (props: Props) => {
       backButtonLabel="Already have an account?"
       backButtonHref="/auth/login"
       showSocial
+      socialMessage="Sign up with credentials"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
