@@ -28,8 +28,7 @@ export const LoginForm = (props: Props) => {
   const [isPending, startTransition] = useTransition();
   // if there is error in user submission, use this to set error box
   const [error, setError] = useState<string | undefined>("");
-  // same thing as error
-  const [success, setSuccess] = useState<string | undefined>("");
+  
 
   // creating the form type we will pass into our form component
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -44,14 +43,12 @@ export const LoginForm = (props: Props) => {
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     // clear all errors or success messages when call onsubmit again
     setError("");
-    setSuccess("");
 
     // server action
     // creating transition to disable all components while server action is being processed
     startTransition(() => {
       login(values).then((data) => {
         setError(data?.error);
-        setSuccess(data?.success);
       });
     });
   };
@@ -105,7 +102,6 @@ export const LoginForm = (props: Props) => {
             />
           </div>
           <FormError message={error}/>
-          <FormSuccess message={success}/>
           <Button disabled={isPending} type="submit">
             Login
           </Button>
