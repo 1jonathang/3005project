@@ -50,8 +50,8 @@ export const LoginForm = (props: Props) => {
     // creating transition to disable all components while server action is being processed
     startTransition(() => {
       login(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+        setSuccess(data?.success);
       });
     });
   };
