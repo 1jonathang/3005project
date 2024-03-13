@@ -12,9 +12,10 @@ import {
 } from "./ui/dropdown-menu";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { db } from "@/lib/db";
 
-
-const UserNav = () => {
+const UserNav = async () => {
+  const user = await db.user;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -44,9 +45,7 @@ const UserNav = () => {
           </DropdownMenuItem>
         ) : null} */}
 
-        <DropdownMenuItem
-          className="text-red-600 cursor-pointer"
-        >
+        <DropdownMenuItem className="text-red-600 cursor-pointer">
           Sign Out
           <LogOut className="w-4 h-4 ml-2" />
         </DropdownMenuItem>

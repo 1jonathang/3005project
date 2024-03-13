@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as z from "zod";
 import { CardWrapper } from "./CardWrapper";
 import { useForm } from "react-hook-form";
-import { LoginSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -20,10 +20,11 @@ import { FormError } from "../FormError";
 import { FormSuccess } from "../FormSuccess";
 import { login } from "@/actions/login";
 import { useTransition } from "react";
+import { register } from "@/actions/register";
 
 type Props = {};
 
-export const LoginForm = (props: Props) => {
+export const RegisterForm = (props: Props) => {
   // to disable components while server action is being processed
   const [isPending, startTransition] = useTransition();
   // if there is error in user submission, use this to set error box
@@ -32,16 +33,17 @@ export const LoginForm = (props: Props) => {
   const [success, setSuccess] = useState<string | undefined>("");
 
   // creating the form type we will pass into our form component
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
       password: "",
+      name: "",
     },
   });
 
   // onsubmit function for when you click login button
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     // clear all errors or success messages when call onsubmit again
     setError("");
     setSuccess("");
@@ -49,24 +51,41 @@ export const LoginForm = (props: Props) => {
     // server action
     // creating transition to disable all components while server action is being processed
     startTransition(() => {
-      login(values).then((data) => {
-        setError(data?.error);
-        setSuccess(data?.success);
+      register(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
       });
     });
   };
 
   return (
     <CardWrapper
-      headerLabel="Im kinda racist"
-      backButtonLabel="Don't have an account?"
-      backButtonHref="/auth/register"
+      headerLabel="Create an account"
+      backButtonLabel="Already have an account?"
+      backButtonHref="/auth/login"
       showSocial
-      socialMessage="Sign in with credentials"
+      socialMessage="Sign up with credentials"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
+          <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="Johnny Sins"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -107,7 +126,7 @@ export const LoginForm = (props: Props) => {
           <FormError message={error}/>
           <FormSuccess message={success}/>
           <Button disabled={isPending} type="submit">
-            Login
+           Sign up
           </Button>
         </form>
       </Form>
