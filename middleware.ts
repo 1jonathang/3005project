@@ -37,7 +37,6 @@ export default auth((req) => {
 
   // redirect user to login page if not logged in and on a protected route
   if (!isLoggedIn && !isPublicRoute) {
-
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
 
