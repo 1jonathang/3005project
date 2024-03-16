@@ -33,6 +33,11 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  pages: {
+    signIn: "/auth/login",
+    //  when something goes wrong, redirect them to here
+    error: "/auth/error",
+  },
   // Callbacks are asynchronous functions you can use to control what happens when an action is performed.
   // best to use with jwt
   // play a critical role in asynchronous operations, such as network requests to validate tokens or retrieve user information
@@ -59,6 +64,15 @@ export const {
       if (token.role && session.user) session.user.role = token.role;
 
       return session;
+    },
+  },
+  // creating an event to verify a users email that logged in with google or github, just setting the date in which login was succesfull
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
     },
   },
   adapter: PrismaAdapter(db),

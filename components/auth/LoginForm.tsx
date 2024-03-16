@@ -20,15 +20,22 @@ import { FormError } from "../FormError";
 import { FormSuccess } from "../FormSuccess";
 import { login } from "@/actions/login";
 import { useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 
 type Props = {};
 
 export const LoginForm = (props: Props) => {
+  // edge case in which your google and github emails are the same
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with different provider"
+      : "";
+
   // to disable components while server action is being processed
   const [isPending, startTransition] = useTransition();
   // if there is error in user submission, use this to set error box
   const [error, setError] = useState<string | undefined>("");
-  
 
   // creating the form type we will pass into our form component
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -55,6 +62,7 @@ export const LoginForm = (props: Props) => {
 
   return (
     <CardWrapper
+      headerText="Welcome!"
       headerLabel="Im kinda racist"
       backButtonLabel="Don't have an account?"
       backButtonHref="/auth/register"
@@ -101,7 +109,7 @@ export const LoginForm = (props: Props) => {
               )}
             />
           </div>
-          <FormError message={error}/>
+          <FormError message={error || urlError} />
           <Button disabled={isPending} type="submit">
             Login
           </Button>
