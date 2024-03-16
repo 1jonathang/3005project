@@ -60,6 +60,7 @@ export const RegisterForm = (props: Props) => {
 
   return (
     <CardWrapper
+      headerText="Welcome!"
       headerLabel="Create an account"
       backButtonLabel="Already have an account?"
       backButtonHref="/auth/login"
