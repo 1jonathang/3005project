@@ -2,6 +2,7 @@ import { User } from "next-auth";
 import React from "react";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import Image from "next/image";
+import { FaUser } from "react-icons/fa";
 
 // getting the pfp from the user
 type Props = {
@@ -22,6 +23,7 @@ const UserAvatar = ({ user }: Props) => {
         </div>
       ) : (
         <AvatarFallback>
+          <FaUser />
           <span className="sr-only">{user.name}</span>
         </AvatarFallback>
       )}
