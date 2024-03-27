@@ -1,14 +1,17 @@
 import Link from "next/link";
 import React from "react";
 import { ThemeToggle } from "./Themetoggle";
-import UserNav from "./UserNav";
 import { LoginButton } from "./auth/login-button";
 import { Button } from "./ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LogOut } from "lucide-react";
+import { auth } from "@/auth";
+import { SignOutButton } from "./auth/SignOutButton";
+import UserAccountNav from "./UserAccountNav";
 
 type Props = {};
 
 const Navbar = async (props: Props) => {
+  const session = await auth();
   return (
     <div className="fixed inset-x-0 top-0 bg-white dark:bg-[#020817] z-[10] h-fit border-b border-zinc-300 dark:border-slate-500 py-3">
       <div className="flex items-center justify-between h-full gap-2 px-8 mx-auto max-w-7xl">
@@ -20,12 +23,16 @@ const Navbar = async (props: Props) => {
         <div className="flex item-center">
           <ThemeToggle className="mr-4" />
           <div className="flex items-center">
-            <LoginButton>
-              <Button variant={"secondary"}>
-                Sign up
-                <ArrowRight className="ml-2 w-5 h-5" strokeWidth={3} />
-              </Button>
-            </LoginButton>
+            {session?.user ? (
+              <UserAccountNav user={session?.user} />
+            ) : (
+              <LoginButton>
+                <Button variant={"secondary"}>
+                  Sign up
+                  <ArrowRight className="ml-2 w-5 h-5" strokeWidth={3} />
+                </Button>
+              </LoginButton>
+            )}
           </div>
         </div>
       </div>

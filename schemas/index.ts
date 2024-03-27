@@ -12,7 +12,8 @@ export const LoginSchema = z.object({
     message: "Password is required",
   }),
 });
-export const SignUpSchema = z.object({
+
+export const RegisterSchema = z.object({
   email: z.string().email({
     message: "YOU GO TO CARLETON",
   }),
@@ -20,7 +21,17 @@ export const SignUpSchema = z.object({
     .string()
     .regex(passwordRegex, {
       message:
-        "Password must contain special characters and be at least 8 characters also you go to carleton.",
+        "Password must contain special characters and be at least 6 characters also you go to carleton.",
     })
-    .min(8),
+    .min(6),
+  name: z.string().min(1, {
+    message: "Username is required.",
+  }),
 });
+
+export const NewPasswordSchema = z.object({
+   password: z.string().min(6, {
+     message: "Minimum of 6 characters required",
+   }),
+ });
+ 
