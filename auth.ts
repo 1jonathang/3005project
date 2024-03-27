@@ -12,6 +12,9 @@ import { UserRole } from "@prisma/client";
 // declaring types for our user and token, so that we can pass in the role to the token later
 declare module "@auth/core/types" {
   interface User {
+    weight: any;
+    goalWeight: any;
+    height: any;
     // for now a user on our app can be admin, trainer, or user
     role: UserRole;
   }
@@ -53,15 +56,29 @@ export const {
       if (!existingUser) return token;
 
       // assigning the users role to the token of this sessions role
+      // token.role = existingUser.role;
+      // token.weight = existingUser.weight;
+      // token.height = existingUser.height;
+      // token.goalWeight = existingUser.goalWeight;
       token.role = existingUser.role;
+      token.weight = 150;
+      token.height = 170;
+      token.goalWeight = 200;
+
+      token.customField = "fortnite";
       return token;
     },
-    async session({ token, session }) {
+    async session({ token, session, user }) {
       console.log({ sessionToken: token });
+
       // every single place where we use this session,we can always have access to the id and role of our user
       // now we can type "session.user." and the popup window will include the id and role
       if (token.sub && session.user) session.user.id = token.sub;
       if (token.role && session.user) session.user.role = token.role;
+      if (token.weight && session.user) session.user.weight = token.weight;
+      if (token.height && session.user) session.user.height = token.height;
+      if (token.goalWeight && session.user)
+        session.user.goalWeight = token.goalWeight;
 
       return session;
     },

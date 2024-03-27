@@ -28,3 +28,10 @@ export const RegisterSchema = z.object({
     message: "Username is required.",
   }),
 });
+
+export const NewPasswordSchema = z.object({
+   password: z.string().min(6, {
+     message: "Minimum of 6 characters required",
+   }),
+ });
+ 

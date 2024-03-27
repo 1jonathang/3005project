@@ -13,6 +13,7 @@ generator client {
 enum UserRole {
    ADMIN
    USER
+   MEMBER
    TRAINER
 }
 
@@ -22,9 +23,13 @@ model User {
    email         String?   @unique
    image         String?
    password      String?
-   role          UserRole  @default(USER)
+   role          UserRole  @default(MEMBER)
    accounts      Account[]
    emailVerified DateTime?
+   height        Int?
+   weight        Int?
+   goalWeight    Int?
+   goalDeadline  DateTime?
 }
 
 model Account {

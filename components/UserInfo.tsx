@@ -31,6 +31,18 @@ export const UserInfo = ({ user, label }: Props) => {
           <p className="text-sm font-medium">Role</p>
           <p className="truncate text-sm text-muted-foreground">{user?.role}</p>
         </div>
+        <div className="flex flex-row items-center justify-between rounded-lg p-3">
+          <p className="text-sm font-medium">Weight</p>
+          <p className="truncate text-sm text-muted-foreground">{user?.weight}lbs</p>
+        </div>
+        <div className="flex flex-row items-center justify-between rounded-lg p-3">
+          <p className="text-sm font-medium">Gole weight</p>
+          <p className="truncate text-sm text-muted-foreground">{user?.goalWeight}lbs</p>
+        </div>
+        <div className="flex flex-row items-center justify-between rounded-lg p-3">
+          <p className="text-sm font-medium">Height</p>
+          <p className="truncate text-sm text-muted-foreground">{user?.height}cm</p>
+        </div>
       </CardContent>
     </Card>
   );
