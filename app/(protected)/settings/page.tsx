@@ -13,12 +13,13 @@ const page = async (props: Props) => {
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2">
       <div className="flex flex-col gap-y-5">
         <div className="flex flex-row gap-x-3">
-          <Button>
-            <Link href="/stats">stats</Link>
-          </Button>
-          <Button>
-            <Link href="/admin">admin panel</Link>
-          </Button>
+          <Link href="/stats">
+            <Button>stats</Button>
+          </Link>
+
+          <Link href="/admin">
+            <Button>admin panel</Button>
+          </Link>
         </div>
         <Card className="md:w-[700px] sm:w-[300px]">
           <CardHeader>

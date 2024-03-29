@@ -1,12 +1,8 @@
 "use client";
 
 import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
-import { useSearchParams } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { Input } from "@/components/ui/input";
+import React, { useState, useTransition } from "react";
+import { CardWrapper } from "./CardWrapper";
 import {
   Form,
   FormControl,
@@ -15,31 +11,35 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { NewPasswordSchema } from "@/schemas";
-import { CardWrapper } from "./CardWrapper";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "../ui/input";
 import { FormError } from "../FormError";
 import { FormSuccess } from "../FormSuccess";
 import { Button } from "../ui/button";
-import { newPassword } from "@/actions/new-password";
+import { NewHeightSchema } from "@/schemas";
+import { newHeight } from "@/actions/new-height";
 
-export const NewPasswordForm = () => {
+type Props = {};
+
+export const NewHeightForm = (props: Props) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof NewPasswordSchema>>({
-    resolver: zodResolver(NewPasswordSchema),
+  const form = useForm<z.infer<typeof NewHeightSchema>>({
+    resolver: zodResolver(NewHeightSchema),
     defaultValues: {
-      password: "",
+      height: 0,
     },
   });
 
-  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
+  const onSubmit = (values: z.infer<typeof NewHeightSchema>) => {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      newPassword(values).then((data) => {
+      newHeight(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       });
@@ -48,26 +48,26 @@ export const NewPasswordForm = () => {
 
   return (
     <CardWrapper
-      headerText="Reset user settings"
-      headerLabel="Enter a new password"
-      backButtonLabel="Back to login"
+      headerText="Update your height"
+      headerLabel="Enter your new height"
+      backButtonLabel="Back to stats"
       backButtonHref="/stats"
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <FormField
               control={form.control}
-              name="password"
+              name="height"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Height (cm)</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       disabled={isPending}
-                      placeholder="******"
-                      type="password"
+                      placeholder="100"
+                      type="number"
                     />
                   </FormControl>
                   <FormMessage />
@@ -78,7 +78,7 @@ export const NewPasswordForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button disabled={isPending} type="submit" className="w-full">
-            Reset password
+            Update height
           </Button>
         </form>
       </Form>
