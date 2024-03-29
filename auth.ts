@@ -56,14 +56,10 @@ export const {
       if (!existingUser) return token;
 
       // assigning the users role to the token of this sessions role
-      // token.role = existingUser.role;
-      // token.weight = existingUser.weight;
-      // token.height = existingUser.height;
-      // token.goalWeight = existingUser.goalWeight;
       token.role = existingUser.role;
-      token.weight = 150;
-      token.height = 170;
-      token.goalWeight = 200;
+      token.weight = existingUser.weight;
+      token.height = existingUser.height;
+      token.goalWeight = existingUser.goalWeight;
 
       token.customField = "fortnite";
       return token;

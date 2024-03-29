@@ -10,11 +10,12 @@ type Props = {};
 const page = async (props: Props) => {
   const user = await currUser();
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2 gap-y-5">
       <UserInfo user={user} label="black" />
-      <Button className="mt-2">
-        <Link href="/stats/edit">edit</Link>
-      </Button>
+
+      <Link href="/auth/new-password">
+        <Button className="mt-5">change password</Button>
+      </Link>
     </div>
   );
 };
