@@ -63,7 +63,7 @@ export const LoginForm = (props: Props) => {
   return (
     <CardWrapper
       headerText="Welcome!"
-      headerLabel="Im kinda racist"
+      headerLabel="Log back in"
       backButtonLabel="Don't have an account?"
       backButtonHref="/auth/register"
       showSocial
